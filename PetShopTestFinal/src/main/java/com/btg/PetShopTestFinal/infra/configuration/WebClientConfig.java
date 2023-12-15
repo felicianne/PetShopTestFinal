@@ -1,6 +1,7 @@
 package com.btg.PetShopTestFinal.infra.configuration;
 
-import com.btg.PetShopTest.infra.client.StockClient;
+
+import com.btg.PetShopTestFinal.infra.client.StockClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
