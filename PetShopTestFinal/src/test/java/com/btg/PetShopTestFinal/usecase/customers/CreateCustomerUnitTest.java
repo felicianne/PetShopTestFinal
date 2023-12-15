@@ -58,7 +58,7 @@ public class CreateCustomerUnitTest {
 
             String name = "Ana";
             List<Customer> mockFoundCustomers = new ArrayList<>();
-            when(customerRepository.findByName(name)).thenReturn(mockFoundCustomers);
+            when(customerRepository.findByName(name)).thenReturn((Customer) mockFoundCustomers);
 
             List<Customer> result = createCustomer.findByName(name);
 

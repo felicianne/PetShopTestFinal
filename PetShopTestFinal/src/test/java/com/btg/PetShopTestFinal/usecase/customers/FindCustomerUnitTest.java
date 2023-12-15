@@ -73,7 +73,7 @@ public class FindCustomerUnitTest {
 
         String name = "Ana";
         List<Customer> foundCustomers = Collections.singletonList(new Customer());
-        Mockito.when(repository.findByName(name)).thenReturn(foundCustomers);
+        Mockito.when(repository.findByName(name)).thenReturn((Customer) foundCustomers);
 
         List<CustomerResponse> result = findCustomer.findByName(name);
 

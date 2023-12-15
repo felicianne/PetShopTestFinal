@@ -39,7 +39,7 @@ public class CreateOrderUnitTest {
     @BeforeEach
     public void setUp() {
         customer = (List<Customer>) new Customer();
-          when(customerRepository.findByName(Mockito.any())).thenReturn(customer);
+          when(customerRepository.findByName(Mockito.any())).thenReturn((Customer) customer);
 
     }
 

@@ -31,7 +31,7 @@ public class CreateCustomer {
         public List<Customer> findByName(String name) {
             List<Customer> found = new ArrayList<>();
             if (name != null) {
-                found = repository.findByName(name);
+                found = (List<Customer>) repository.findByName(name);
             }
             return found;
         }
