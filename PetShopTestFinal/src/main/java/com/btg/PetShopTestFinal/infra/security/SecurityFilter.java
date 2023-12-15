@@ -1,7 +1,8 @@
 package com.btg.PetShopTestFinal.infra.security;
 
-import com.btg.PetShopTest.modules.customers.entity.Customer;
-import com.btg.PetShopTest.modules.customers.repository.CustomerRepository;
+
+import com.btg.PetShopTestFinal.modules.costumers.entity.Customer;
+import com.btg.PetShopTestFinal.modules.costumers.repository.CustomerRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

@@ -9,3 +9,5 @@ public interface StockClient {
     @GetExchange(value = "/query/{sku}")
     ProductResponse consultarEstoqueProduto(@PathVariable(value = "sku") String sku);
 }
+
+

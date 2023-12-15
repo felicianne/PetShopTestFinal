@@ -1,11 +1,12 @@
-package com.btg.PetShopTest.modules.product.controller;
+package com.btg.PetShopTestFinal.modules.product.controller;
 
-import com.btg.PetShopTest.modules.product.dto.ProductRequest;
-import com.btg.PetShopTest.modules.product.dto.ProductResponse;
-import com.btg.PetShopTest.modules.product.usecases.CreateProduct;
-import com.btg.PetShopTest.modules.product.usecases.DeleteProduct;
-import com.btg.PetShopTest.modules.product.usecases.FindProduct;
-import com.btg.PetShopTest.modules.product.usecases.UpdateProduct;
+
+import com.btg.PetShopTestFinal.modules.product.dto.ProductRequest;
+import com.btg.PetShopTestFinal.modules.product.dto.ProductResponse;
+import com.btg.PetShopTestFinal.modules.product.usecase.CreateProduct;
+import com.btg.PetShopTestFinal.modules.product.usecase.DeleteProduct;
+import com.btg.PetShopTestFinal.modules.product.usecase.FindProduct;
+import com.btg.PetShopTestFinal.modules.product.usecase.UpdateProduct;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
