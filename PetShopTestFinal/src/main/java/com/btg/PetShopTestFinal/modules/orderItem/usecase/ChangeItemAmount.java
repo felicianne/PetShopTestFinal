@@ -17,7 +17,8 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 
 @Service
-public class ChangeItemAmount {
+public class
+ChangeItemAmount {
     @Autowired
     OrderItemRepository ordemItemRepository;
     @Autowired
