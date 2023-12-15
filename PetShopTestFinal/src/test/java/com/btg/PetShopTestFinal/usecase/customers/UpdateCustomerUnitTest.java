@@ -73,6 +73,5 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
             assertThrows(Exception.class, () -> updateCustomer.execute(customerId, null));
         }
     }
-}
 
 
