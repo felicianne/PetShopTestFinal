@@ -40,7 +40,7 @@ public class FindCustomer {
             throw new ClientBadRequest("Name not null");
         }
 
-        List<Customer> found = repository.findByName(name);
+        List<Customer> found = (List<Customer>) repository.findByName(name);
 
         return CustomerConvert.toListResponse(found);
     }
