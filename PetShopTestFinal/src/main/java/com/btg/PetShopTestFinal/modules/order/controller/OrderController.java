@@ -2,7 +2,7 @@ package com.btg.PetShopTestFinal.modules.order.controller;
 
 import com.btg.PetShopTestFinal.modules.order.dto.OrderRequest;
 import com.btg.PetShopTestFinal.modules.order.dto.OrderResponse;
-import com.btg.PetShopTestFinal.modules.order.usecase.CreateOrder;
+import com.btg.PetShopTestFinal.modules.order.usecase.ExecuteOrder;
 import com.btg.PetShopTestFinal.modules.order.usecase.DeleteOrder;
 import com.btg.PetShopTestFinal.modules.order.usecase.FindOrder;
 import com.btg.PetShopTestFinal.modules.orderItem.dto.OrderItemRequest;
@@ -24,7 +24,7 @@ import java.util.List;
 @RequestMapping("/order")
 public class OrderController {
     @Autowired
-    CreateOrder createOrder;
+    ExecuteOrder createOrder;
     @Autowired
     DeleteOrder deleteOrder;
     @Autowired

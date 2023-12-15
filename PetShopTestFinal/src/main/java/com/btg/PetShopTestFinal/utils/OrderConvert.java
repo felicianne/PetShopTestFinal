@@ -4,6 +4,7 @@ package com.btg.PetShopTestFinal.utils;
 import com.btg.PetShopTestFinal.modules.costumers.entity.Customer;
 import com.btg.PetShopTestFinal.modules.order.dto.OrderResponse;
 import com.btg.PetShopTestFinal.modules.order.entity.Order;
+import com.btg.PetShopTestFinal.modules.order.entity.OrderStatus;
 import com.btg.PetShopTestFinal.modules.orderItem.dto.OrderItemResponse;
 
 import java.math.BigDecimal;
@@ -19,7 +20,7 @@ public class OrderConvert {
 
         order.setIdTransaction(UUID.randomUUID().toString());
         order.setCustomer(customer);
-        order.setStatus(Order.OrderStatus.OPEN);
+        order.setStatus(OrderStatus.OPEN);
         order.setOrderItens(new ArrayList<>());
         order.setCreatedAt(LocalDateTime.now());
         order.setUpdatedAt(LocalDateTime.now());
@@ -35,6 +36,7 @@ public class OrderConvert {
         orderResponse.setCustomer(order.getCustomer().getIdTransaction());
         orderResponse.setItems(orderItemsResponse);
         orderResponse.setStatus(order.getStatus());
+        //orderResponse.setStatus(getStatus);
         orderResponse.setTotal(order.getTotal());
 
         return orderResponse;

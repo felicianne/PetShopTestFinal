@@ -4,7 +4,9 @@ import com.btg.PetShopTestFinal.modules.costumers.entity.Customer;
 import com.btg.PetShopTestFinal.modules.orderItem.entity.OrderItem;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -14,6 +16,8 @@ import java.util.List;
 @Data
 @Entity(name = "order")
 @Table(name = "orders")
+@Getter
+@Setter
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,7 +49,5 @@ public class Order {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-    public enum OrderStatus {
-        OPEN, PENDING_PAYMENT, PAID, SHIPPING, FINISH;
-    }
+
 }
