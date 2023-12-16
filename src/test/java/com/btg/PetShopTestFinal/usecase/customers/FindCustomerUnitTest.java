@@ -1,11 +1,13 @@
 package com.btg.PetShopTestFinal.usecase.customers;
 
 import com.btg.PetShopTestFinal.infra.exception.ClientBadRequest;
-import com.btg.PetShopTestFinal.modules.costumers.dto.CustomerResponse;
-import com.btg.PetShopTestFinal.modules.costumers.entity.Customer;
-import com.btg.PetShopTestFinal.modules.costumers.repository.CustomerRepository;
-import com.btg.PetShopTestFinal.modules.costumers.usecase.FindCustomer;
+import com.btg.PetShopTestFinal.modules.customers.dto.CustomerResponse;
+import com.btg.PetShopTestFinal.modules.customers.entity.Customer;
+import com.btg.PetShopTestFinal.modules.customers.repository.CustomerRepository;
+import com.btg.PetShopTestFinal.modules.customers.usecase.FindCustomer;
 import com.btg.PetShopTestFinal.utils.CustomerConvert;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -13,11 +15,14 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
 public class FindCustomerUnitTest {
@@ -27,64 +32,64 @@ public class FindCustomerUnitTest {
     @InjectMocks
     private FindCustomer findCustomer;
 
-    @Test
-    public void testFindByEmailWithExistingCustomer() throws ClientBadRequest {
-        String email = "test@example.com";
-        Customer existingCustomer = new Customer();
-        Mockito.when(repository.findByEmail(email)).thenReturn(existingCustomer);
+    private Customer customer;
 
-        CustomerResponse result = findCustomer.findByEmail(email);
-
-        assertEquals(CustomerConvert.toResponse(existingCustomer), result);
+    @BeforeEach
+    public void setup(){
+        customer = new Customer();
+        customer.setIdTransaction("unit-test");
+        customer.setEmail("validEmail@email.com");
+        customer.setAddress("validAddress,999");
+        customer.setName("ValidName");
+        customer.setPassword("@validPassword123");
     }
 
     @Test
-    public void testFindByEmailWithNonExistingCustomer() {
+    public void findCustomerById() throws ClientBadRequest {
+        when(repository.findByIdTransaction(customer.getIdTransaction())).thenReturn(customer);
 
-        String email = "nonexistent@example.com";
-        Mockito.when(repository.findByEmail(email)).thenReturn(null);
+        CustomerResponse customerTest = findCustomer.findById(customer.getIdTransaction());
 
-        assertThrows(ClientBadRequest.class, () -> findCustomer.findByEmail(email));
+        verify(repository, times(1)).findByIdTransaction(any());
+        assertEquals(customer.getIdTransaction(), customerTest.getIdTransaction(), "Unexpected customer id");
     }
 
     @Test
-    public void testFindByIdWithExistingCustomer() throws ClientBadRequest {
+    public void findCustomerByInvalidId(){
+        when(repository.findByIdTransaction(customer.getIdTransaction())).thenReturn(null);
 
-        String customerId = "123";
-        Customer existingCustomer = new Customer();
-        Mockito.when(repository.findByIdTransaction(customerId)).thenReturn(existingCustomer);
+        var execption = assertThrows(Exception.class, () -> findCustomer.findById(customer.getIdTransaction()));
 
-        CustomerResponse result = findCustomer.findById(customerId);
-
-        assertEquals(CustomerConvert.toResponse(existingCustomer), result);
+        assertEquals("Customer not found with ID: " + "unit-test", execption.getMessage());
+        verify(repository, times(1)).findByIdTransaction(any());
     }
 
     @Test
-    public void testFindByIdWithNonExistingCustomer() {
+    public void findCustomerByEmail() throws ClientBadRequest {
+        when(repository.findByEmail(customer.getEmail())).thenReturn(customer);
 
-        String customerId = "456";
-        Mockito.when(repository.findByIdTransaction(customerId)).thenReturn(null);
+        CustomerResponse customerTest = findCustomer.findByEmail(customer.getEmail());
 
-        assertThrows(ClientBadRequest.class, () -> findCustomer.findById(customerId));
+        verify(repository, times(1)).findByEmail(any());
+        assertEquals("validEmail@email.com", customerTest.getEmail(), "Unexpected customer email");
     }
 
     @Test
-    public void testFindByName() throws ClientBadRequest {
+    public void findCustomerByInvalidEmail(){
+        when(repository.findByEmail(customer.getEmail())).thenReturn(null);
 
-        String name = "Ana";
-        List<Customer> foundCustomers = Collections.singletonList(new Customer());
-        Mockito.when(repository.findByName(name)).thenReturn((Customer) foundCustomers);
-
-        List<CustomerResponse> result = findCustomer.findByName(name);
-
-        assertEquals(CustomerConvert.toListResponse(foundCustomers), result);
+        var execption = assertThrows(Exception.class, () -> findCustomer.findByEmail(customer.getEmail()));
+        assertEquals("Customer not found with email: " + "validEmail@email.com", execption.getMessage());
+        verify(repository, times(1)).findByEmail(any());
     }
+
 
     @Test
-    public void testFindByNameWithNullName() {
+    public void findCustomerByNameEqualsNull(){
+        when(repository.findByName(null)).thenReturn(null);
 
-        assertThrows(ClientBadRequest.class, () -> findCustomer.findByName(null));
+        var execption = assertThrows(Exception.class, () ->  findCustomer.findByName(null));
+
+        assertEquals("Name not null", execption.getMessage());
     }
-
-
 }

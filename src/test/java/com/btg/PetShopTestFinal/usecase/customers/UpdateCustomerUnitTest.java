@@ -1,11 +1,12 @@
 package com.btg.PetShopTestFinal.usecase.customers;
 
-import com.btg.PetShopTestFinal.modules.costumers.dto.CustomerRequestUpdate;
-import com.btg.PetShopTestFinal.modules.costumers.dto.CustomerResponse;
-import com.btg.PetShopTestFinal.modules.costumers.entity.Customer;
-import com.btg.PetShopTestFinal.modules.costumers.repository.CustomerRepository;
-import com.btg.PetShopTestFinal.modules.costumers.usecase.UpdateCustomer;
+import com.btg.PetShopTestFinal.modules.customers.dto.CustomerRequestUpdate;
+import com.btg.PetShopTestFinal.modules.customers.dto.CustomerResponse;
+import com.btg.PetShopTestFinal.modules.customers.entity.Customer;
+import com.btg.PetShopTestFinal.modules.customers.repository.CustomerRepository;
+import com.btg.PetShopTestFinal.modules.customers.usecase.UpdateCustomer;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -51,45 +52,19 @@ import static org.mockito.Mockito.*;
         assertEquals("unit test", customerResponse.getName());
     }
 
-}
+    @Test
+    @DisplayName("Should update product invalid")
+    void UpdateProductIdInvalid() {
+        CustomerRequestUpdate customerRequest = new CustomerRequestUpdate();
 
-       /* @Test
-        public void testExecuteWithExistingCustomer() throws Exception {
+        when(repository.findByIdTransaction("uni-test")).thenReturn(new Customer());
 
-            String customerId = "123";
-            Customer existingCustomer = new Customer();
-            Mockito.when(repository.findByIdTransaction(customerId)).thenReturn(existingCustomer);
+        Customer customer = repository.findByIdTransaction("uni-test");
 
-            CustomerResponse result = updateCustomer.execute(customerId, customerRequest);
-
-            assertEquals(CustomerConvert.toResponse(existingCustomer), result);
-            assertEquals("New Name", existingCustomer.getName());
-            assertEquals("New Address", existingCustomer.getAddress());
-        }
-
-        @Test
-        public void testExecuteWithNonExistingCustomer() {
-
-            String customerId = "456";
-            Mockito.when(repository.findByIdTransaction(customerId)).thenReturn(null);
-
-            assertThrows(Exception.class, () -> updateCustomer.execute(customerId, customerRequest));
-        }
-
-        @Test
-        public void testExecuteWithNullId() {
-
-            assertThrows(Exception.class, () -> updateCustomer.execute(null, customerRequest));
-        }
-
-        @Test
-        public void testExecuteWithNullCustomerRequest() {
-
-            String customerId = "789";
-
-            assertThrows(Exception.class, () -> updateCustomer.execute(customerId, null));
-        }
+        Exception exception = assertThrows(
+                Exception.class, () -> updateCustomer.execute(customer.getIdTransaction(), customerRequest));
+        assertEquals("Customer not found", exception.getMessage());
     }
-*/
+}
 
 
