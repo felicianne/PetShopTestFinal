@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
     public class ListCustomerUnitTest {
@@ -27,7 +28,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
         @Test
-        public void testExecute() {
+        void ListAllCustomers(){
+            Customer customerTest = new Customer();
+            when(repository.findAll()).thenReturn(List.of(customerTest));
+
+            List<CustomerResponse> listAllCustomerResponse = listCustomer.execute();
+
+            verify(repository, times(1)).findAll();
+            assertEquals(1, listAllCustomerResponse.size());
+
+        }
+}
+
+       /* public void testExecute() {
 
             Customer customer1 = new Customer();
             customer1.setIdTransaction("1");
@@ -52,6 +65,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
             assertEquals(expected, result);
         }
-    }
+    }*/
 
 

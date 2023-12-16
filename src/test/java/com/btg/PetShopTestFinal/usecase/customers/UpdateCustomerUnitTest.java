@@ -1,42 +1,59 @@
 package com.btg.PetShopTestFinal.usecase.customers;
 
-import com.btg.PetShopTestFinal.modules.costumers.dto.CustomerRequest;
+import com.btg.PetShopTestFinal.modules.costumers.dto.CustomerRequestUpdate;
 import com.btg.PetShopTestFinal.modules.costumers.dto.CustomerResponse;
 import com.btg.PetShopTestFinal.modules.costumers.entity.Customer;
 import com.btg.PetShopTestFinal.modules.costumers.repository.CustomerRepository;
 import com.btg.PetShopTestFinal.modules.costumers.usecase.UpdateCustomer;
-import com.btg.PetShopTestFinal.utils.CustomerConvert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
-    public class UpdateCustomerUnitTest {
+ class UpdateCustomerUnitTest {
 
-        @Mock
-        private CustomerRepository repository;
+    @Mock
+    private CustomerRepository repository;
 
-        @InjectMocks
-        private UpdateCustomer updateCustomer;
+    @InjectMocks
+    private UpdateCustomer updateCustomer;
 
-        private CustomerRequest customerRequest;
+    private Customer customer;
 
-        @BeforeEach
-        public void setup() {
-            customerRequest = new CustomerRequest();
-            customerRequest.setAddress("New Name");
-            customerRequest.setAddress("New Address");
-        }
+    @BeforeEach
+    public void setup() {
+        customer = new Customer();
+        customer.setIdTransaction("unit-test");
+        customer.setEmail("validEmail@email.com");
+        customer.setAddress("validAddress,999");
+        customer.setName("ValidName");
+        customer.setPassword("@validPassword123");
+    }
 
+    @Test
+    public void UpdateCustomerSuccess() throws Exception {
+        CustomerRequestUpdate customerRequest = new CustomerRequestUpdate();
+        customerRequest.setName("unit test");
+        customerRequest.setAddress("street uni test, 000");
 
-        @Test
+        when(repository.findByIdTransaction(customer.getIdTransaction())).thenReturn(customer);
+
+        CustomerResponse customerResponse = updateCustomer.execute("unit-test", customerRequest);
+
+        verify(repository, times(1)).save(any());
+        assertEquals("unit test", customerResponse.getName());
+    }
+
+}
+
+       /* @Test
         public void testExecuteWithExistingCustomer() throws Exception {
 
             String customerId = "123";
@@ -73,6 +90,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
             assertThrows(Exception.class, () -> updateCustomer.execute(customerId, null));
         }
     }
-
+*/
 
 

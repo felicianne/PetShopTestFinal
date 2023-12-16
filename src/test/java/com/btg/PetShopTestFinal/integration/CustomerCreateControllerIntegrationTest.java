@@ -60,7 +60,7 @@ class CustomerCreateControllerIntegrationTest {
     }
 
     @Test
-    void createCustomerWithNameErrorLengthCondition() throws Exception {
+    void createCustomerWithLengthNameConditionError() throws Exception {
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/customer")
                         .content("""
@@ -79,7 +79,7 @@ class CustomerCreateControllerIntegrationTest {
                 MockMvcResultMatchers.status().is4xxClientError()
         ).andExpect(
                 MockMvcResultMatchers.jsonPath("$.errors[0].name")
-                        .value("length must be between 3 and 35")
+                        .value("length must be between 3 and 40")
         );
     }
 

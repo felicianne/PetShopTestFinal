@@ -15,13 +15,18 @@ public class UpdateProduct {
     ProductRepository repository;
 
     public ProductResponse execute(String id, ProductRequest productRequest) throws Exception {
+        Product product = repository.findProductById(id);
+
         if (repository.findProductById(id) == null) {
-            throw new Exception("Not exist product");
+            throw new Exception("product not found");
         }
 
-        Product product = ProductConvert.toEntity(productRequest);
+        product.setDescription(productRequest.getDescription());
+        product.setQuantityStock(productRequest.getQuantityStock());
+        product.setName(productRequest.getName());
         product.setSkuId(id);
         repository.save(product);
+
         return ProductConvert.toResponse(product);
     }
 

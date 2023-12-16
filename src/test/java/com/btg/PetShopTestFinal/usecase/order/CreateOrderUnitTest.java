@@ -6,7 +6,6 @@ import com.btg.PetShopTestFinal.modules.order.dto.OrderRequest;
 import com.btg.PetShopTestFinal.modules.order.dto.OrderResponse;
 import com.btg.PetShopTestFinal.modules.order.entity.Order;
 import com.btg.PetShopTestFinal.modules.order.repository.OrderRepository;
-import com.btg.PetShopTestFinal.modules.order.usecase.ExecuteOrder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,10 +1,14 @@
 package com.btg.PetShopTestFinal.modules.order.usecase;
 
+import com.btg.PetShopTestFinal.infra.exception.ClientBadRequest;
 import com.btg.PetShopTestFinal.modules.costumers.entity.Customer;
 import com.btg.PetShopTestFinal.modules.costumers.repository.CustomerRepository;
+import com.btg.PetShopTestFinal.modules.order.dto.OrderRequest;
+import com.btg.PetShopTestFinal.modules.order.dto.OrderResponse;
 import com.btg.PetShopTestFinal.modules.order.entity.Order;
 import com.btg.PetShopTestFinal.modules.order.entity.OrderStatus;
 import com.btg.PetShopTestFinal.modules.order.repository.OrderRepository;
+import com.btg.PetShopTestFinal.utils.OrderConvert;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -16,29 +20,16 @@ public class CreateOrder {
     private OrderRepository repository;
     private CustomerRepository customerRepository;
 
-    public CreateOrder(OrderRepository repository, CustomerRepository customerRepository) {
-        this.repository = repository;
-        this.customerRepository = customerRepository;
-    }
+    public OrderResponse execute(OrderRequest OrderRequest) throws Exception {
+        Customer customer = customerRepository.findByIdTransaction(OrderRequest.getCustomerId());
 
-    @Transactional
-    public Order create(Customer customer) {
-        validCustomer(customer);
-        Order order = new Order();
-        order.setCustomer(customer);
-        order.setOrderItens(new ArrayList<>());
-        order.setStatus(OrderStatus.OPEN);
+        if(customer == null) throw new ClientBadRequest("Customer not found");
+
+        Order order = OrderConvert.toEntity(customer);
         repository.save(order);
-        return order;
-    }
 
-    private void validCustomer(Customer customer) {
-        Customer found = customerRepository.findByName(customer.getName());
-        if (found == null) {
-            throw new IllegalStateException("Cliente não encontrado");
-        }
+        return OrderConvert.toResponseOrder(order);
     }
-
 }
 
 

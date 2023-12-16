@@ -6,7 +6,7 @@ import com.btg.PetShopTestFinal.modules.costumers.dto.CustomerResponse;
 import com.btg.PetShopTestFinal.modules.costumers.entity.Customer;
 import com.btg.PetShopTestFinal.modules.costumers.repository.CustomerRepository;
 import com.btg.PetShopTestFinal.modules.costumers.usecase.RegisterCustomer;
-import com.btg.PetShopTestFinal.utils.Validador;
+import com.btg.PetShopTestFinal.utils.Validator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -45,9 +45,9 @@ public class RegisterCustomerUnitTest {
     @Test
     public void testExecuteWithValidCustomer() throws Exception {
 
-        Mockito.when(Validador.name(this.customer.getName())).thenReturn(true);
-        Mockito.when(Validador.passwordValidate(this.customer.getPassword())).thenReturn(true);
-        Mockito.when(Validador.emailValidate(this.customer.getEmail())).thenReturn(true);
+        Mockito.when(Validator.name(this.customer.getName())).thenReturn(true);
+        Mockito.when(Validator.passwordValidate(this.customer.getPassword())).thenReturn(true);
+        Mockito.when(Validator.emailValidate(this.customer.getEmail())).thenReturn(true);
         Mockito.when(repository.findByEmail(this.customer.getEmail())).thenReturn(null);
         Mockito.when(passwordEncoder.encode(this.customer.getPassword())).thenReturn("encodedPassword");
 
@@ -62,7 +62,7 @@ public class RegisterCustomerUnitTest {
     public void testExecuteWithInvalidName() {
 
         customer.setName("Joana");
-        Mockito.when(Validador.name(this.customer.getName())).thenReturn(false);
+        Mockito.when(Validator.name(this.customer.getName())).thenReturn(false);
 
         assertThrows(Exception.class, () -> registerCustomer.execute(this.customer));
     }
@@ -71,7 +71,7 @@ public class RegisterCustomerUnitTest {
     public void testExecuteWithoutdName() {
 
         customer.setName("");
-        Mockito.when(Validador.name(this.customer.getName())).thenReturn(null);
+        Mockito.when(Validator.name(this.customer.getName())).thenReturn(null);
 
         assertThrows(Exception.class, () -> registerCustomer.execute(this.customer));
     }
@@ -81,7 +81,7 @@ public class RegisterCustomerUnitTest {
     public void testExecuteWithInvalidPassword() {
 
         customer.setPassword("wrongPassword");
-        Mockito.when(Validador.passwordValidate(this.customer.getPassword())).thenReturn(false);
+        Mockito.when(Validator.passwordValidate(this.customer.getPassword())).thenReturn(false);
 
         assertThrows(PasswordValidationError.class, () -> registerCustomer.execute(this.customer));
     }
@@ -90,7 +90,7 @@ public class RegisterCustomerUnitTest {
     public void testExecuteWithoutPassword() {
 
         customer.setPassword("");
-        Mockito.when(Validador.passwordValidate(this.customer.getPassword())).thenReturn(null);
+        Mockito.when(Validator.passwordValidate(this.customer.getPassword())).thenReturn(null);
 
         assertThrows(PasswordValidationError.class, () -> registerCustomer.execute(this.customer));
     }
@@ -99,7 +99,7 @@ public class RegisterCustomerUnitTest {
     public void testExecuteWithInvalidEmail() {
 
         customer.setEmail("anaexemple.com");
-        Mockito.when(Validador.emailValidate(this.customer.getEmail())).thenReturn(false);
+        Mockito.when(Validator.emailValidate(this.customer.getEmail())).thenReturn(false);
 
         assertThrows(Exception.class, () -> registerCustomer.execute(customer));
 
@@ -110,7 +110,7 @@ public class RegisterCustomerUnitTest {
     public void testExecuteWithoutEmail() {
 
         customer.setEmail("");
-        Mockito.when(Validador.emailValidate(this.customer.getEmail())).thenReturn(null);
+        Mockito.when(Validator.emailValidate(this.customer.getEmail())).thenReturn(null);
         Mockito.when(repository.findByEmail(this.customer.getEmail())).thenReturn(new Customer());
 
         Mockito.verify(repository, Mockito.times(1)).findByEmail("");

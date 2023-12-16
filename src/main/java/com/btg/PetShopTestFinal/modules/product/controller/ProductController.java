@@ -50,7 +50,7 @@ public class ProductController {
             @ApiResponse(responseCode = "404", description = "Not found - The product was not found")
     })
     @GetMapping
-    public ResponseEntity<List<ProductResponse>> getProduct(){
+    public ResponseEntity<List<ProductResponse>> getAllProducts(){
         return ResponseEntity.ok(findProductService.listAll());
     }
 
