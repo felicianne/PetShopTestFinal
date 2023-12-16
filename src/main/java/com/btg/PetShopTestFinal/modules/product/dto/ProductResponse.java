@@ -24,4 +24,7 @@ public class ProductResponse {
     private BigDecimal price;
 
 
+    public String getId() {
+        return "id";
+    }
 }

@@ -37,4 +37,8 @@ public class OrderItem {
 
     @Column(nullable = false)
     private BigDecimal total;
+
+    public double getQuantity() {
+        return 0;
+    }
 }

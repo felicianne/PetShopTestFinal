@@ -28,7 +28,7 @@ ChangeItemAmount {
     @Autowired
     DeleteOrderItem deleteOrderItem;
 
-    public OrderItemResponse execute(String orderItemID, OrderItemRequest orderItemRequest) throws Exception {
+    public  OrderItemResponse execute(String orderItemID, OrderItemRequest orderItemRequest) throws Exception {
         OrderItem orderItem = validateOrderItem(orderItemID);
 
         if (!deleteOrderAmountEqualsZero(orderItemRequest)) {
@@ -44,7 +44,7 @@ ChangeItemAmount {
     }
 
     private OrderItem validateOrderItem(String orderItemID) throws ClientBadRequest {
-        OrderItem orderItem = ordemItemRepository.findOrderItemById(orderItemID);
+        var orderItem = ordemItemRepository.findOrderItemById(orderItemID);
         if (orderItem == null) {
             throw new ClientBadRequest("Order not found");
         }
