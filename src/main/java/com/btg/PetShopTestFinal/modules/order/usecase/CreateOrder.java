@@ -2,29 +2,43 @@ package com.btg.PetShopTestFinal.modules.order.usecase;
 
 import com.btg.PetShopTestFinal.modules.costumers.entity.Customer;
 import com.btg.PetShopTestFinal.modules.costumers.repository.CustomerRepository;
-import com.btg.PetShopTestFinal.modules.order.dto.OrderRequest;
-import com.btg.PetShopTestFinal.modules.order.dto.OrderResponse;
 import com.btg.PetShopTestFinal.modules.order.entity.Order;
+import com.btg.PetShopTestFinal.modules.order.entity.OrderStatus;
 import com.btg.PetShopTestFinal.modules.order.repository.OrderRepository;
-import com.btg.PetShopTestFinal.utils.OrderConvert;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
-public class CreateOrder{
-    @Autowired
-    OrderRepository orderRepository;
-    @Autowired
-    CustomerRepository customerRepository;
+public class CreateOrder {
 
-    public OrderResponse execute(OrderRequest OrderRequest) throws Exception {
-        Customer customer = customerRepository.findByIdTransaction(OrderRequest.getCustomerId());
+    private OrderRepository repository;
+    private CustomerRepository customerRepository;
 
-        if(customer == null) throw new Exception("Customer not found");
-
-        Order order = OrderConvert.toEntity(customer);
-        orderRepository.save(order);
-
-        return OrderConvert.toResponseOrder(order);
+    public CreateOrder(OrderRepository repository, CustomerRepository customerRepository) {
+        this.repository = repository;
+        this.customerRepository = customerRepository;
     }
+
+    @Transactional
+    public Order create(Customer customer) {
+        validCustomer(customer);
+        Order order = new Order();
+        order.setCustomer(customer);
+        order.setOrderItens(new ArrayList<>());
+        order.setStatus(OrderStatus.OPEN);
+        repository.save(order);
+        return order;
+    }
+
+    private void validCustomer(Customer customer) {
+        Customer found = customerRepository.findByName(customer.getName());
+        if (found == null) {
+            throw new IllegalStateException("Cliente não encontrado");
+        }
+    }
+
 }
+
+
