@@ -1,9 +1,9 @@
 package com.btg.PetShopTestFinal.usecase.customers;
 
-import com.btg.PetShopTestFinal.modules.customers.dto.CustomerResponse;
-import com.btg.PetShopTestFinal.modules.customers.entity.Customer;
-import com.btg.PetShopTestFinal.modules.customers.repository.CustomerRepository;
-import com.btg.PetShopTestFinal.modules.customers.usecase.ListCustomer;
+import com.btg.PetShopTestFinal.modules.costumers.dto.CustomerResponse;
+import com.btg.PetShopTestFinal.modules.costumers.entity.Customer;
+import com.btg.PetShopTestFinal.modules.costumers.repository.CustomerRepository;
+import com.btg.PetShopTestFinal.modules.costumers.usecase.ListCustomer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

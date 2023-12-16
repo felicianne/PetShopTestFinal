@@ -1,11 +1,11 @@
 package com.btg.PetShopTestFinal.usecase.customers;
 
 import com.btg.PetShopTestFinal.infra.exception.ClientBadRequest;
-import com.btg.PetShopTestFinal.modules.customers.dto.CustomerResponse;
-import com.btg.PetShopTestFinal.modules.customers.entity.Customer;
-import com.btg.PetShopTestFinal.modules.customers.repository.CustomerRepository;
-import com.btg.PetShopTestFinal.modules.customers.usecase.FindCustomer;
-import com.btg.PetShopTestFinal.utils.CustomerConvert;
+import com.btg.PetShopTestFinal.modules.costumers.dto.CustomerResponse;
+import com.btg.PetShopTestFinal.modules.costumers.entity.Customer;
+import com.btg.PetShopTestFinal.modules.costumers.repository.CustomerRepository;
+import com.btg.PetShopTestFinal.modules.costumers.usecase.FindCustomer;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

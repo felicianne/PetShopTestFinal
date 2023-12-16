@@ -2,10 +2,10 @@ package com.btg.PetShopTestFinal.usecase.customers;
 
 import com.btg.PetShopTestFinal.infra.exception.ClientBadRequest;
 import com.btg.PetShopTestFinal.infra.exception.PasswordValidationError;
-import com.btg.PetShopTestFinal.modules.customers.dto.CustomerResponse;
-import com.btg.PetShopTestFinal.modules.customers.entity.Customer;
-import com.btg.PetShopTestFinal.modules.customers.repository.CustomerRepository;
-import com.btg.PetShopTestFinal.modules.customers.usecase.RegisterCustomer;
+import com.btg.PetShopTestFinal.modules.costumers.entity.Customer;
+import com.btg.PetShopTestFinal.modules.costumers.repository.CustomerRepository;
+import com.btg.PetShopTestFinal.modules.costumers.usecase.RegisterCustomer;
+
 import com.btg.PetShopTestFinal.utils.Validator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
