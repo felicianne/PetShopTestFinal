@@ -16,7 +16,7 @@ public class UpdateProduct {
 
     public ProductResponse execute(String id, ProductRequest productRequest) throws Exception {
         if (repository.findProductById(id) == null) {
-            throw new Exception("Does not exist product");
+            throw new Exception("Product not found");
         }
 
         Product product = ProductConvert.toEntity(productRequest);
