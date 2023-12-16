@@ -1,8 +1,8 @@
 package com.btg.PetShopTestFinal.modules.orderItem.usecase;
 
 import com.btg.PetShopTestFinal.infra.exception.ClientBadRequest;
-import com.btg.PetShopTestFinal.infra.queue.DTO.StockItemReservationProducer;
-import com.btg.PetShopTestFinal.infra.queue.DTO.StockReservationRequest;
+import com.btg.PetShopTestFinal.infra.queue.StockItemReservationProducer;
+import com.btg.PetShopTestFinal.infra.queue.dto.StockReservationRequest;
 import com.btg.PetShopTestFinal.modules.order.entity.Order;
 import com.btg.PetShopTestFinal.modules.order.repository.OrderRepository;
 import com.btg.PetShopTestFinal.modules.order.usecase.UpdateOrder;
@@ -42,8 +42,6 @@ public class AddOrderItem {
 
         OrderItem orderItem = saveOrderItem(order, orderItemRequest, product);
 
-        reservarItems(orderId, product);
-
         updateOrderTotal(order);
         updateOrder.execute(orderId, order);
 
@@ -66,19 +64,6 @@ public class AddOrderItem {
         return product;
     }
 
-
-    private void reservarItems(String skuId, Product item) {
-        StockReservationRequest reservarEstoqueRequest = new StockReservationRequest();
-        reservarEstoqueRequest.setSkuId(skuId);
-        reservarEstoqueRequest.setItem(item);
-
-        try {
-            StockItemReservation.send(reservarEstoqueRequest);
-        } catch (JsonProcessingException e) {
-            log.error("Não foi possível enviar a mensagem ao destinatário", e);
-            throw new RuntimeException(e);
-        }
-    }
 
     private OrderItem saveOrderItem(Order order, OrderItemRequest orderItemRequest, Product product) {
         OrderItem newItem = OrderItemConvert.toEntity(orderItemRequest, order, product);

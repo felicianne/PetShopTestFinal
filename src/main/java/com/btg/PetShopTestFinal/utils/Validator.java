@@ -1,6 +1,6 @@
 package com.btg.PetShopTestFinal.utils;
 
-public class Validador {
+public class Validator {
 
 
     public static Boolean passwordValidate(String password){

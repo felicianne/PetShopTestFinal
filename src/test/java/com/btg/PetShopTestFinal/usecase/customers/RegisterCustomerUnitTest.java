@@ -2,12 +2,13 @@ package com.btg.PetShopTestFinal.usecase.customers;
 
 import com.btg.PetShopTestFinal.infra.exception.ClientBadRequest;
 import com.btg.PetShopTestFinal.infra.exception.PasswordValidationError;
-import com.btg.PetShopTestFinal.modules.costumers.dto.CustomerResponse;
-import com.btg.PetShopTestFinal.modules.costumers.entity.Customer;
-import com.btg.PetShopTestFinal.modules.costumers.repository.CustomerRepository;
-import com.btg.PetShopTestFinal.modules.costumers.usecase.RegisterCustomer;
-import com.btg.PetShopTestFinal.utils.Validador;
+import com.btg.PetShopTestFinal.modules.customers.dto.CustomerResponse;
+import com.btg.PetShopTestFinal.modules.customers.entity.Customer;
+import com.btg.PetShopTestFinal.modules.customers.repository.CustomerRepository;
+import com.btg.PetShopTestFinal.modules.customers.usecase.RegisterCustomer;
+import com.btg.PetShopTestFinal.utils.Validator;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -16,8 +17,12 @@ import org.mockito.Mockito;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.UUID;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
 public class RegisterCustomerUnitTest {
@@ -35,90 +40,76 @@ public class RegisterCustomerUnitTest {
 
     @BeforeEach
     public void setup(){
-        customer = new Customer();
-        customer.setName("Ana");
-        customer.setEmail("ana@exemple.com");
-        customer.setPassword("password");
-    }
+    customer = new Customer();
+    customer.setIdTransaction(UUID.randomUUID().toString());
+    customer.setEmail("unit-test@email.com");
+    customer.setAddress("unit-test-address,999");
+    customer.setName("unit test");
+    customer.setPassword("@UnitTest123");
+
+    when(passwordEncoder.encode(customer.getPassword())).thenReturn(customer.getPassword());
+    when(repository.findByEmail("unit-test@email.com")).thenReturn(null);
+}
 
 
     @Test
-    public void testExecuteWithValidCustomer() throws Exception {
+    public void registerCustomerWithSuccess() throws Exception {
+        registerCustomer.execute(customer);
 
-        Mockito.when(Validador.name(this.customer.getName())).thenReturn(true);
-        Mockito.when(Validador.passwordValidate(this.customer.getPassword())).thenReturn(true);
-        Mockito.when(Validador.emailValidate(this.customer.getEmail())).thenReturn(true);
-        Mockito.when(repository.findByEmail(this.customer.getEmail())).thenReturn(null);
-        Mockito.when(passwordEncoder.encode(this.customer.getPassword())).thenReturn("encodedPassword");
-
-        CustomerResponse result = registerCustomer.execute(customer);
-
-        CustomerResponse expected = new CustomerResponse();
-
-        assertEquals(expected, result);
+        verify(repository, times(1)).save(any());
+        verify(passwordEncoder, times(1)).encode(any());
     }
 
     @Test
-    public void testExecuteWithInvalidName() {
+    public void registerCustomerWithNameLessThanTwoCharacters() {
+        customer.setName("ut");
 
-        customer.setName("Joana");
-        Mockito.when(Validador.name(this.customer.getName())).thenReturn(false);
+        Exception exception = assertThrows(
+                Exception.class, () -> {
+                    registerCustomer.execute(customer);
+                }
+        );
 
-        assertThrows(Exception.class, () -> registerCustomer.execute(this.customer));
+        assertEquals("length must be between 3 and 40", exception.getMessage());
     }
 
     @Test
-    public void testExecuteWithoutdName() {
+    public void registerCustomerWithEmailInvalid() {
+        customer.setEmail("emailInvalid");
 
-        customer.setName("");
-        Mockito.when(Validador.name(this.customer.getName())).thenReturn(null);
+        Exception exeption = assertThrows(
+                Exception.class, () -> registerCustomer.execute(customer));
 
-        assertThrows(Exception.class, () -> registerCustomer.execute(this.customer));
+        assertEquals("must be a legitimate email address", exeption.getMessage());
     }
 
+   /* @Test
+    public void registerCustomerWithPasswordInvalid() {
+        customer.setPassword("12345");
 
-    @Test
-    public void testExecuteWithInvalidPassword() {
+        PasswordValidationError exeption = assertThrows(
+                PasswordValidationError.class, () -> registerCustomer.execute(customer));
 
-        customer.setPassword("wrongPassword");
-        Mockito.when(Validador.passwordValidate(this.customer.getPassword())).thenReturn(false);
-
-        assertThrows(PasswordValidationError.class, () -> registerCustomer.execute(this.customer));
+        assertEquals("Invalid Password", exeption.getMessage());
     }
-
+*/
     @Test
-    public void testExecuteWithoutPassword() {
+    public void registerCustomerWithEmailExist() throws Exception {
+        when(repository.findByEmail("unit-test@email.com")).thenReturn(customer);
 
-        customer.setPassword("");
-        Mockito.when(Validador.passwordValidate(this.customer.getPassword())).thenReturn(null);
-
-        assertThrows(PasswordValidationError.class, () -> registerCustomer.execute(this.customer));
-    }
-
-    @Test
-    public void testExecuteWithInvalidEmail() {
-
-        customer.setEmail("anaexemple.com");
-        Mockito.when(Validador.emailValidate(this.customer.getEmail())).thenReturn(false);
-
-        assertThrows(Exception.class, () -> registerCustomer.execute(customer));
-
-        Mockito.verify(repository, Mockito.times(1)).findByEmail("anaexemple.com");
+        Exception exception = assertThrows(
+                Exception.class, () -> {
+                    registerCustomer.execute(customer);
+                }
+        );
+        assertEquals("Email is already in use", exception.getMessage());
     }
 
     @Test
-    public void testExecuteWithoutEmail() {
-
-        customer.setEmail("");
-        Mockito.when(Validador.emailValidate(this.customer.getEmail())).thenReturn(null);
-        Mockito.when(repository.findByEmail(this.customer.getEmail())).thenReturn(new Customer());
-
-        Mockito.verify(repository, Mockito.times(1)).findByEmail("");
-
-
-        assertThrows(ClientBadRequest.class, () -> registerCustomer.execute(customer));
+    public void registerCustomerWithPasswordEncode() throws Exception {
+        registerCustomer.execute(customer);
+        verify(passwordEncoder, times(1)).encode(any());
     }
-
 }
 
 

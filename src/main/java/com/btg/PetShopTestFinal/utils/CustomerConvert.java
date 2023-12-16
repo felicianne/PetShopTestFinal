@@ -27,6 +27,7 @@ public class CustomerConvert {
         customerResponse.setIdTransaction(customer.getIdTransaction());
         customerResponse.setName(customer.getName());
         customerResponse.setEmail(customer.getEmail());
+        customerResponse.setAddress(customer.getAddress());
         return customerResponse;
     }
 

@@ -6,7 +6,7 @@ import com.btg.PetShopTestFinal.modules.costumers.dto.CustomerResponse;
 import com.btg.PetShopTestFinal.modules.costumers.entity.Customer;
 import com.btg.PetShopTestFinal.modules.costumers.repository.CustomerRepository;
 import com.btg.PetShopTestFinal.utils.CustomerConvert;
-import com.btg.PetShopTestFinal.utils.Validador;
+import com.btg.PetShopTestFinal.utils.Validator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,11 +18,11 @@ public class RegisterCustomer {
     private final PasswordEncoder passwordEncoder;
 
     public CustomerResponse execute(Customer customer) throws Exception {
-        if(!Validador.name(customer.getName()))
-            throw new Exception("length must be between 3 and 35");
+        if(!Validator.name(customer.getName()))
+            throw new Exception("length must be between 3 and 40");
 
-        if(!Validador.passwordValidate(customer.getPassword()))
-            throw new PasswordValidationError("Senha deve seguir o padrão");
+        if(!Validator.passwordValidate(customer.getPassword()))
+            throw new PasswordValidationError("Incorrect Password");
 
         checkEmailAvailability(customer.getEmail());
 
@@ -34,12 +34,12 @@ public class RegisterCustomer {
     }
 
     private void checkEmailAvailability(String email) throws Exception {
-        if(!Validador.emailValidate(email))
-            throw new Exception("must be a well-formed email address");
+        if(!Validator.emailValidate(email))
+            throw new Exception("must be a legitimate email address");
 
         Customer emailExist = repository.findByEmail(email);
         if  (emailExist != null ) {
-            throw new ClientBadRequest("Email já está em uso");
+            throw new ClientBadRequest("Email is already in use");
         }
     }
 }

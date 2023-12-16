@@ -1,9 +1,10 @@
 package com.btg.PetShopTestFinal.usecase.customers;
 
 import com.btg.PetShopTestFinal.infra.exception.ClientBadRequest;
-import com.btg.PetShopTestFinal.modules.costumers.entity.Customer;
-import com.btg.PetShopTestFinal.modules.costumers.repository.CustomerRepository;
-import com.btg.PetShopTestFinal.modules.costumers.usecase.DeleteCustomer;
+import com.btg.PetShopTestFinal.modules.customers.entity.Customer;
+import com.btg.PetShopTestFinal.modules.customers.repository.CustomerRepository;
+import com.btg.PetShopTestFinal.modules.customers.usecase.DeleteCustomer;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -11,7 +12,11 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
     public class DeleteCustomerUnitTest {
@@ -22,18 +27,23 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
         @InjectMocks
         private DeleteCustomer deleteCustomer;
 
-        @Test
-        public void ExecuteWithExistingCustomer() throws Exception {
-            String customerId = "123";
-            Customer existingCustomer = new Customer();
-            Mockito.when(repository.findByIdTransaction(customerId)).thenReturn(existingCustomer);
-        }
-        @Test
-        public void testExecuteWithNonExistingCustomer() {
-            String customerId = "456";
-            Mockito.when(repository.findByIdTransaction(customerId)).thenReturn(null);
+    @Test
+    public void deleteCustomerSuccess() throws Exception {
+        Customer customer = new Customer();
+        customer.setIdTransaction(UUID.randomUUID().toString());
 
-            assertThrows(ClientBadRequest.class, () -> deleteCustomer.execute(customerId));
-        }
+        when(repository.findByIdTransaction(customer.getIdTransaction())).thenReturn(customer);
 
+        deleteCustomer.execute(customer.getIdTransaction());
+
+        verify(repository, times(1)).delete(customer);
     }
+
+    @Test
+    public void deleteCustomerEquals(){
+        ClientBadRequest exception = assertThrows(
+                ClientBadRequest.class, () -> deleteCustomer.execute("unit-test"));
+
+        assertEquals("Customer not found with ID: unit-test", exception.getMessage());
+    }
+}

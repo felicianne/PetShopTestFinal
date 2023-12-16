@@ -1,12 +1,12 @@
 package com.btg.PetShopTestFinal.usecase.order;
 
-import com.btg.PetShopTestFinal.modules.costumers.entity.Customer;
-import com.btg.PetShopTestFinal.modules.costumers.repository.CustomerRepository;
+import com.btg.PetShopTestFinal.modules.customers.entity.Customer;
+import com.btg.PetShopTestFinal.modules.customers.repository.CustomerRepository;
 import com.btg.PetShopTestFinal.modules.order.dto.OrderRequest;
 import com.btg.PetShopTestFinal.modules.order.dto.OrderResponse;
 import com.btg.PetShopTestFinal.modules.order.entity.Order;
 import com.btg.PetShopTestFinal.modules.order.repository.OrderRepository;
-import com.btg.PetShopTestFinal.modules.order.usecase.ExecuteOrder;
+import com.btg.PetShopTestFinal.modules.order.usecase.CreateOrder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,7 +25,7 @@ import static org.mockito.Mockito.*;
 public class CreateOrderUnitTest {
 
     @InjectMocks
-    private ExecuteOrder createOrder;
+    private CreateOrder createOrder;
 
     @Mock
     private OrderRepository orderRepository;

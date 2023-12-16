@@ -36,7 +36,7 @@ public class OrderConvert {
         orderResponse.setCustomer(order.getCustomer().getIdTransaction());
         orderResponse.setItems(orderItemsResponse);
         orderResponse.setStatus(order.getStatus());
-        //orderResponse.setStatus(getStatus);
+        orderResponse.setStatus(order.getStatus());
         orderResponse.setTotal(order.getTotal());
 
         return orderResponse;
