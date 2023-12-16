@@ -39,7 +39,7 @@ public class CreateOrderUnitTest {
     @BeforeEach
     public void setUp() {
         customer = (List<Customer>) new Customer();
-          when(customerRepository.findByName(Mockito.any())).thenReturn((Customer) customer);
+        when(customerRepository.findByName(Mockito.any())).thenReturn((Customer) customer);
 
     }
 
@@ -49,7 +49,7 @@ public class CreateOrderUnitTest {
 
         when(customerRepository.findByName(Mockito.any())).thenReturn(null);
 
-               assertThrows(IllegalStateException.class,
+        assertThrows(IllegalStateException.class,
                 () -> createOrder.execute((OrderRequest) customer));
     }
 
@@ -60,11 +60,11 @@ public class CreateOrderUnitTest {
         Customer mockCustomer = new Customer();
         when(customerRepository.findByIdTransaction(orderRequest.getCustomerId())).thenReturn(mockCustomer);
 
-             OrderResponse orderResponse = createOrder.execute(orderRequest);
+        OrderResponse orderResponse = createOrder.execute(orderRequest);
 
-             assertNotNull(orderResponse);
+        assertNotNull(orderResponse);
 
-             verify(orderRepository, times(1)).save(any(Order.class));
+        verify(orderRepository, times(1)).save(any(Order.class));
     }
 
     @Test
@@ -78,6 +78,4 @@ public class CreateOrderUnitTest {
         verify(orderRepository, never()).save(any(Order.class));
     }
 
-
 }
-

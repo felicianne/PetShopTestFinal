@@ -28,35 +28,35 @@ public class UpdateOrderUnitTest {
 
     @BeforeEach
     public void setUp() {
-            MockitoAnnotations.openMocks(this);
-        }
-        @Test
-        public void testExecuteOrderSuccessfully() throws Exception {
-
-            String orderId = "123";
-            Order mockExistingOrder = new Order();
-            Order mockUpdatedOrderInput = new Order();
-
-            when(orderRepository.findOrderById(orderId)).thenReturn(mockExistingOrder);
-
-            OrderResponse result = updateOrder.execute(orderId, mockUpdatedOrderInput);
-
-            assertNotNull(result);
-            assertEquals(mockUpdatedOrderInput.getStatus(), mockExistingOrder.getStatus());
-            assertEquals(mockUpdatedOrderInput.getOrderItens(), mockExistingOrder.getOrderItens());
-            assertEquals(mockUpdatedOrderInput.getTotal(), mockExistingOrder.getTotal());
-            verify(orderRepository, times(1)).save(mockExistingOrder);
-        }
-
-        @Test
-        public void testExecuteOrderNotFound() {
-
-            String orderId = "456";
-            when(orderRepository.findOrderById(orderId)).thenReturn(null);
-
-            assertThrows(Exception.class, () -> updateOrder.execute(orderId, new Order()));
-            verify(orderRepository, never()).save(any(Order.class));
-        }
-
+        MockitoAnnotations.openMocks(this);
     }
 
+    @Test
+    public void testExecuteOrderSuccessfully() throws Exception {
+
+        String orderId = "123";
+        Order mockExistingOrder = new Order();
+        Order mockUpdatedOrderInput = new Order();
+
+        when(orderRepository.findOrderById(orderId)).thenReturn(mockExistingOrder);
+
+        OrderResponse result = updateOrder.execute(orderId, mockUpdatedOrderInput);
+
+        assertNotNull(result);
+        assertEquals(mockUpdatedOrderInput.getStatus(), mockExistingOrder.getStatus());
+        assertEquals(mockUpdatedOrderInput.getOrderItens(), mockExistingOrder.getOrderItens());
+        assertEquals(mockUpdatedOrderInput.getTotal(), mockExistingOrder.getTotal());
+        verify(orderRepository, times(1)).save(mockExistingOrder);
+    }
+
+    @Test
+    public void testExecuteOrderNotFound() {
+
+        String orderId = "456";
+        when(orderRepository.findOrderById(orderId)).thenReturn(null);
+
+        assertThrows(Exception.class, () -> updateOrder.execute(orderId, new Order()));
+        verify(orderRepository, never()).save(any(Order.class));
+    }
+
+}

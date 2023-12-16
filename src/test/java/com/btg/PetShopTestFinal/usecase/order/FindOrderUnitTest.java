@@ -28,42 +28,41 @@ public class FindOrderUnitTest {
 
     @BeforeEach
     public void setUp() {
-            MockitoAnnotations.openMocks(this);
-        }
-        @Test
-        public void testFindAllOrders() {
+        MockitoAnnotations.openMocks(this);
+    }
 
-            List<Order> mockOrders = Arrays.asList(new Order());
-            when(orderRepository.findAll()).thenReturn(mockOrders);
+    @Test
+    public void testFindAllOrders() {
 
-            List<OrderResponse> result = findOrder.findAll();
+        List<Order> mockOrders = Arrays.asList(new Order());
+        when(orderRepository.findAll()).thenReturn(mockOrders);
 
-            assertEquals(mockOrders.size(), result.size());
+        List<OrderResponse> result = findOrder.findAll();
 
-        }
-
-        @Test
-        public void testFindOrderByIdSuccessfully() throws Exception {
-
-            String orderId = "123";
-            Order mockOrder = new Order();
-            when(orderRepository.findOrderById(orderId)).thenReturn(mockOrder);
-
-            OrderResponse result = findOrder.findById(orderId);
-
-            assertNotNull(result);
-
-        }
-
-        @Test
-        public void testFindOrderByIdNotFound() {
-
-            String orderId = "456";
-            when(orderRepository.findOrderById(orderId)).thenReturn(null);
-
-            assertThrows(Exception.class, () -> findOrder.findById(orderId));
-
-               }
+        assertEquals(mockOrders.size(), result.size());
 
     }
 
+    @Test
+    public void testFindOrderByIdSuccessfully() throws Exception {
+
+        String orderId = "123";
+        Order mockOrder = new Order();
+        when(orderRepository.findOrderById(orderId)).thenReturn(mockOrder);
+
+        OrderResponse result = findOrder.findById(orderId);
+
+        assertNotNull(result);
+
+    }
+
+    @Test
+    public void testFindOrderByIdNotFound() {
+
+        String orderId = "456";
+        when(orderRepository.findOrderById(orderId)).thenReturn(null);
+
+        assertThrows(Exception.class, () -> findOrder.findById(orderId));
+
+    }
+}

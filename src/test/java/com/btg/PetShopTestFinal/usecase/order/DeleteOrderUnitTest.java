@@ -20,36 +20,34 @@ public class DeleteOrderUnitTest {
     private DeleteOrder deleteOrder;
 
     @Mock
-      private OrderRepository orderRepository;
+    private OrderRepository orderRepository;
 
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
-        }
-        @Test
-        public void testExecuteOrderSuccessfully() throws Exception {
-
-            String orderId = "123";
-            Order mockOrder = new Order();
-            when(orderRepository.findOrderById(orderId)).thenReturn(mockOrder);
-
-            deleteOrder.execute(orderId);
-
-            verify(orderRepository, times(1)).delete(mockOrder);
-        }
-
-        @Test
-        public void testExecuteOrderNotFound() {
-
-            String orderId = "456";
-            when(orderRepository.findOrderById(orderId)).thenReturn(null);
-
-            assertThrows(Exception.class, () -> deleteOrder.execute(orderId));
-
-            verify(orderRepository, never()).delete(any(Order.class));
-        }
-
-
     }
 
+    @Test
+    public void testExecuteOrderSuccessfully() throws Exception {
 
+        String orderId = "123";
+        Order mockOrder = new Order();
+        when(orderRepository.findOrderById(orderId)).thenReturn(mockOrder);
+
+        deleteOrder.execute(orderId);
+
+        verify(orderRepository, times(1)).delete(mockOrder);
+    }
+
+    @Test
+    public void testExecuteOrderNotFound() {
+
+        String orderId = "456";
+        when(orderRepository.findOrderById(orderId)).thenReturn(null);
+
+        assertThrows(Exception.class, () -> deleteOrder.execute(orderId));
+
+        verify(orderRepository, never()).delete(any(Order.class));
+    }
+
+}
