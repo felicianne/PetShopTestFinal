@@ -1,7 +1,7 @@
-package com.btg.PetShopTestFinal.integration;
+package com.btg.PetShopTestFinal.integration.controller;
 
-import com.btg.PetShopTestFinal.modules.costumers.entity.Customer;
-import com.btg.PetShopTestFinal.modules.costumers.usecase.RegisterCustomer;
+import com.btg.PetShopTestFinal.modules.customers.entity.Customer;
+import com.btg.PetShopTestFinal.modules.customers.usecase.RegisterCustomer;
 import com.btg.PetShopTestFinal.utils.CustomerConvert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

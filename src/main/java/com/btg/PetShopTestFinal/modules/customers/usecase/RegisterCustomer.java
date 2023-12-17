@@ -1,10 +1,10 @@
-package com.btg.PetShopTestFinal.modules.costumers.usecase;
+package com.btg.PetShopTestFinal.modules.customers.usecase;
 
 import com.btg.PetShopTestFinal.infra.exception.ClientBadRequest;
 import com.btg.PetShopTestFinal.infra.exception.PasswordValidationError;
-import com.btg.PetShopTestFinal.modules.costumers.dto.CustomerResponse;
-import com.btg.PetShopTestFinal.modules.costumers.entity.Customer;
-import com.btg.PetShopTestFinal.modules.costumers.repository.CustomerRepository;
+import com.btg.PetShopTestFinal.modules.customers.dto.CustomerResponse;
+import com.btg.PetShopTestFinal.modules.customers.entity.Customer;
+import com.btg.PetShopTestFinal.modules.customers.repository.CustomerRepository;
 import com.btg.PetShopTestFinal.utils.CustomerConvert;
 import com.btg.PetShopTestFinal.utils.Validator;
 import lombok.RequiredArgsConstructor;

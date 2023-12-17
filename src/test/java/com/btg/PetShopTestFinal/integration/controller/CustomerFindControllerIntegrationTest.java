@@ -1,9 +1,9 @@
-package com.btg.PetShopTestFinal.integration;
+package com.btg.PetShopTestFinal.integration.controller;
 
 import com.btg.PetShopTestFinal.infra.exception.ClientBadRequest;
-import com.btg.PetShopTestFinal.modules.costumers.dto.CustomerResponse;
-import com.btg.PetShopTestFinal.modules.costumers.entity.Customer;
-import com.btg.PetShopTestFinal.modules.costumers.usecase.FindCustomer;
+import com.btg.PetShopTestFinal.modules.customers.dto.CustomerResponse;
+import com.btg.PetShopTestFinal.modules.customers.entity.Customer;
+import com.btg.PetShopTestFinal.modules.customers.usecase.FindCustomer;
 import com.btg.PetShopTestFinal.utils.CustomerConvert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;

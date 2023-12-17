@@ -1,4 +1,4 @@
-package com.btg.PetShopTestFinal.modules.costumers.dto;
+package com.btg.PetShopTestFinal.modules.customers.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

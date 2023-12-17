@@ -1,7 +1,7 @@
 package com.btg.PetShopTestFinal.utils;
 
 
-import com.btg.PetShopTestFinal.modules.costumers.entity.Customer;
+import com.btg.PetShopTestFinal.modules.customers.entity.Customer;
 import com.btg.PetShopTestFinal.modules.order.dto.OrderResponse;
 import com.btg.PetShopTestFinal.modules.order.entity.Order;
 import com.btg.PetShopTestFinal.modules.order.entity.OrderStatus;

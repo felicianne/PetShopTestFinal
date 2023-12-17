@@ -1,7 +1,7 @@
-package com.btg.PetShopTestFinal.modules.costumers.usecase;
+package com.btg.PetShopTestFinal.modules.customers.usecase;
 
-import com.btg.PetShopTestFinal.modules.costumers.dto.CustomerResponse;
-import com.btg.PetShopTestFinal.modules.costumers.repository.CustomerRepository;
+import com.btg.PetShopTestFinal.modules.customers.dto.CustomerResponse;
+import com.btg.PetShopTestFinal.modules.customers.repository.CustomerRepository;
 import com.btg.PetShopTestFinal.utils.CustomerConvert;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

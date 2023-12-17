@@ -1,9 +1,9 @@
 package com.btg.PetShopTestFinal.utils;
 
 
-import com.btg.PetShopTestFinal.modules.costumers.dto.CustomerRequest;
-import com.btg.PetShopTestFinal.modules.costumers.dto.CustomerResponse;
-import com.btg.PetShopTestFinal.modules.costumers.entity.Customer;
+import com.btg.PetShopTestFinal.modules.customers.dto.CustomerRequest;
+import com.btg.PetShopTestFinal.modules.customers.dto.CustomerResponse;
+import com.btg.PetShopTestFinal.modules.customers.entity.Customer;
 
 import java.util.ArrayList;
 import java.util.List;

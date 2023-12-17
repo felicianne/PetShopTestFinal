@@ -1,7 +1,7 @@
-package com.btg.PetShopTestFinal.modules.costumers.repository;
+package com.btg.PetShopTestFinal.modules.customers.repository;
 
 
-import com.btg.PetShopTestFinal.modules.costumers.entity.Customer;
+import com.btg.PetShopTestFinal.modules.customers.entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

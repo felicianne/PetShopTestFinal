@@ -1,6 +1,6 @@
 package com.btg.PetShopTestFinal.modules.order.entity;
 
-import com.btg.PetShopTestFinal.modules.costumers.entity.Customer;
+import com.btg.PetShopTestFinal.modules.customers.entity.Customer;
 import com.btg.PetShopTestFinal.modules.orderItem.entity.OrderItem;
 import jakarta.persistence.*;
 import lombok.Data;

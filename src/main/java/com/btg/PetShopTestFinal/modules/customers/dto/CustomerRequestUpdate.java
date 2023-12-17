@@ -1,4 +1,4 @@
-package com.btg.PetShopTestFinal.modules.costumers.dto;
+package com.btg.PetShopTestFinal.modules.customers.dto;
 
 import lombok.Data;
 

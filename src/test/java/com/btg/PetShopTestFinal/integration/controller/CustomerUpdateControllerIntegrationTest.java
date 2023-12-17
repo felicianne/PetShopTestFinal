@@ -1,8 +1,8 @@
-package com.btg.PetShopTestFinal.integration;
+package com.btg.PetShopTestFinal.integration.controller;
 
-import com.btg.PetShopTestFinal.modules.costumers.dto.CustomerRequestUpdate;
-import com.btg.PetShopTestFinal.modules.costumers.entity.Customer;
-import com.btg.PetShopTestFinal.modules.costumers.repository.CustomerRepository;
+import com.btg.PetShopTestFinal.modules.customers.dto.CustomerRequestUpdate;
+import com.btg.PetShopTestFinal.modules.customers.entity.Customer;
+import com.btg.PetShopTestFinal.modules.customers.repository.CustomerRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
