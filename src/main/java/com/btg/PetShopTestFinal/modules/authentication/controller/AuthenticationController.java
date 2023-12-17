@@ -3,7 +3,7 @@ package com.btg.PetShopTestFinal.modules.authentication.controller;
 import com.btg.PetShopTestFinal.infra.security.TokenService;
 import com.btg.PetShopTestFinal.modules.authentication.dto.LoginRequest;
 import com.btg.PetShopTestFinal.modules.authentication.dto.TokenResponse;
-import com.btg.PetShopTestFinal.modules.costumers.entity.Customer;
+import com.btg.PetShopTestFinal.modules.customers.entity.Customer;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

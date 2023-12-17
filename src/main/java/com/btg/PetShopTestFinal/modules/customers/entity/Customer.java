@@ -1,4 +1,4 @@
-package com.btg.PetShopTestFinal.modules.costumers.entity;
+package com.btg.PetShopTestFinal.modules.customers.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
