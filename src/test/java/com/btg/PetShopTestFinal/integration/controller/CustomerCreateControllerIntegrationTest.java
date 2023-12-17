@@ -1,4 +1,4 @@
-package com.btg.PetShopTestFinal.integration;
+package com.btg.PetShopTestFinal.integration.controller;
 
 import com.btg.PetShopTestFinal.modules.costumers.entity.Customer;
 import com.btg.PetShopTestFinal.modules.costumers.usecase.RegisterCustomer;

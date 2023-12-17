@@ -34,6 +34,8 @@ public class Order {
             fetch = FetchType.EAGER,//carregar itens associados obs: desempenho
             mappedBy = "order" //associação bidirecional
     )
+
+    @JoinColumn(name = "order_itens", nullable = false)
     private List<OrderItem> orderItens;
 
     @Column(nullable = false)
