@@ -15,25 +15,25 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @Entity(name = "customer")
-@Table(name = "customers")
+/*@Table(name = "customer")*/
 public class Customer implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false, name = "id_transaction")
+  /*  @Column(nullable = false, name = "id_transaction")*/
     private String idTransaction;
 
-    @Column(nullable = false)
+ /*   @Column(nullable = false)*/
     private String name;
 
-    @Column(unique = true, nullable = false)
+/*    @Column(unique = true, nullable = false)*/
     private String email;
 
-    @Column(nullable = false)
+    /*@Column(nullable = false)*/
     private String address;
 
-    @Column(nullable = false)
+ /*   @Column(nullable = false)*/
     private String password;
 
     @Override

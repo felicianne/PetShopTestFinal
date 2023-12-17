@@ -1,10 +1,10 @@
 package com.btg.PetShopTestFinal.usecase.customers;
 
 import com.btg.PetShopTestFinal.infra.exception.ClientBadRequest;
+
 import com.btg.PetShopTestFinal.modules.customers.entity.Customer;
 import com.btg.PetShopTestFinal.modules.customers.repository.CustomerRepository;
 import com.btg.PetShopTestFinal.modules.customers.usecase.DeleteCustomer;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

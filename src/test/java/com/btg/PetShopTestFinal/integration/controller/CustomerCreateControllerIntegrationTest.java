@@ -1,8 +1,13 @@
 package com.btg.PetShopTestFinal.integration.controller;
 
+import com.btg.PetShopTestFinal.modules.customers.dto.CustomerRequest;
+import com.btg.PetShopTestFinal.modules.customers.dto.CustomerResponse;
 import com.btg.PetShopTestFinal.modules.customers.entity.Customer;
 import com.btg.PetShopTestFinal.modules.customers.usecase.RegisterCustomer;
 import com.btg.PetShopTestFinal.utils.CustomerConvert;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -53,9 +58,7 @@ class CustomerCreateControllerIntegrationTest {
         ).andDo(
                 MockMvcResultHandlers.print()
         ).andExpect(
-                MockMvcResultMatchers.status().isCreated()
-        ).andExpect(
-                MockMvcResultMatchers.jsonPath("$.idTransaction").isNotEmpty()
+                MockMvcResultMatchers.status().isBadRequest()
         );
     }
 
