@@ -9,7 +9,7 @@ import java.util.List;
 public class CalculateTotal {
     public static BigDecimal execute(Order order) {
         List<OrderItem> orderItems = order.getOrderItens();
-        BigDecimal newTotal = BigDecimal.ZERO;
+        BigDecimal newTotal = BigDecimal.TEN;
 
         for (OrderItem item : orderItems) {
             BigDecimal itemTotal = item.getTotal();

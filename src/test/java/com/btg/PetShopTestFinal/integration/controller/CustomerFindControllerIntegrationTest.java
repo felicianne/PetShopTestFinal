@@ -1,4 +1,4 @@
-package com.btg.PetShopTestFinal.integration;
+package com.btg.PetShopTestFinal.integration.controller;
 
 import com.btg.PetShopTestFinal.infra.exception.ClientBadRequest;
 import com.btg.PetShopTestFinal.modules.costumers.dto.CustomerResponse;

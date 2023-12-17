@@ -16,6 +16,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -40,6 +42,10 @@ public class CreateOrderUnitTest {
     @BeforeEach
     public void setUp() {
         customer = (List<Customer>) new Customer();
+
+        //customer = List.of(new Customer());
+
+
         when(customerRepository.findByName(Mockito.any())).thenReturn((Customer) customer);
 
     }
