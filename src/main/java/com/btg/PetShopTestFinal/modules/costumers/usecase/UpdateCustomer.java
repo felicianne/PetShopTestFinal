@@ -2,6 +2,7 @@ package com.btg.PetShopTestFinal.modules.costumers.usecase;
 
 import com.btg.PetShopTestFinal.infra.exception.ClientBadRequest;
 import com.btg.PetShopTestFinal.modules.costumers.dto.CustomerRequest;
+import com.btg.PetShopTestFinal.modules.costumers.dto.CustomerRequestUpdate;
 import com.btg.PetShopTestFinal.modules.costumers.dto.CustomerResponse;
 import com.btg.PetShopTestFinal.modules.costumers.entity.Customer;
 import com.btg.PetShopTestFinal.modules.costumers.repository.CustomerRepository;
@@ -15,7 +16,7 @@ public class UpdateCustomer {
     @Autowired
     CustomerRepository repository;
 
-    public CustomerResponse execute(String id, CustomerRequest customerRequest) throws Exception {
+    public CustomerResponse execute(String id, CustomerRequestUpdate customerRequest) throws Exception {
         Customer customer = repository.findByIdTransaction(id);
 
         if(customer == null) throw new ClientBadRequest("Customer not found");
