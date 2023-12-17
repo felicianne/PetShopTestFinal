@@ -1,5 +1,6 @@
 package com.btg.PetShopTestFinal.usecase.product;
 
+import com.btg.PetShopTestFinal.modules.orderItem.entity.OrderItem;
 import com.btg.PetShopTestFinal.modules.product.dto.ProductResponse;
 import com.btg.PetShopTestFinal.modules.product.entity.Product;
 import com.btg.PetShopTestFinal.modules.product.repository.ProductRepository;
@@ -13,7 +14,6 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
@@ -63,4 +63,8 @@ class FindProductUnitTest {
 
         assertThrows(EntityNotFoundException.class, () -> findProduct.findById(nonExistingId));
     }
+
+
+
+
 }

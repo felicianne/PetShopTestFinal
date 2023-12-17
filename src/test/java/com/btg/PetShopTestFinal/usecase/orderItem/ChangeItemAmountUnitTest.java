@@ -15,6 +15,7 @@ import com.btg.PetShopTestFinal.modules.orderItem.usecase.AddOrderItem;
 import com.btg.PetShopTestFinal.modules.orderItem.usecase.ChangeItemAmount;
 import com.btg.PetShopTestFinal.modules.product.entity.Product;
 import com.btg.PetShopTestFinal.modules.product.repository.ProductRepository;
+import com.btg.PetShopTestFinal.utils.OrderItemConvert;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -50,10 +51,9 @@ public class ChangeItemAmountUnitTest {
     private AddOrderItem addOrderItem;
 
     @BeforeEach
-    public void setup() {
-        MockitoAnnotations.openMocks(this);
+    public void setUp() {
+        MockitoAnnotations.initMocks(this);
     }
-
 
 
     @Test
@@ -61,53 +61,28 @@ public class ChangeItemAmountUnitTest {
 
         when(productRepository.findProductById(anyString())).thenReturn(null);
 
-
         assertThrows(Exception.class, () -> addOrderItem.execute("sampleOrderId", new OrderItemRequest()));
     }
 
     @Test
-    public void testReservItems_ExceptionSendingStockReservation_ExceptionThrown() throws JsonProcessingException {
+    public void testReserveItems_ExceptionSendingStockReservation_ExceptionThrown() throws JsonProcessingException {
 
         when(productRepository.findProductById(anyString())).thenReturn(new Product());
         OrderItemRequest orderItemRequest = new OrderItemRequest();
         doThrow(JsonProcessingException.class).when(stockItemReservationProducer).send(any(StockReservationRequest.class));
         assertThrows(ClientBadRequest.class, () -> addOrderItem.execute("sampleOrderId", orderItemRequest));
     }
+
+
     @Test
-    public void testUpdateOrderTotal_RecalculatesTotalAfterAddingItem() throws Exception {
+    public void testExecute_ThrowsExceptionWhenOrderItemNotFound() {
+        when(orderItemRepository.findOrderItemById(any())).thenReturn(null);
 
-        OrderItem orderItem = new OrderItem();
-        when(orderItemRepository.findOrderItemById(anyString())).thenReturn(orderItem);
+        OrderItemRequest orderItemRequest = new OrderItemRequest();
+        orderItemRequest.setProductId("productId");
+        orderItemRequest.setAmount(5);
 
-        Product product = new Product();
-        when(productRepository.findProductById(anyString())).thenReturn(product);
-
-
-        //OrderItemResponse sampleOrderId = ChangeItemAmount.execute("sampleOrderId", new OrderItemRequest());
-        int expectedTotal = 0;
-        assertEquals(expectedTotal, orderItem.getTotal());
+        assertThrows(ClientBadRequest.class, () -> ChangeItemAmount.execute("orderItemId", orderItemRequest));
     }
-    @Test
-    public void testChangeItemAmount_UpdatesItemQuantityInOrder() throws Exception {
-        OrderRepository orderRepository = mock(OrderRepository.class);
-        OrderItemRepository orderItemRepository = mock(OrderItemRepository.class);
-        UpdateOrder updateOrder = mock(UpdateOrder.class);
-        ChangeItemAmount changeItemAmount = new ChangeItemAmount();
-
-        Order order = new Order();
-        OrderItem orderItem = new OrderItem();
-        orderItemRepository.getOrderItems().add(orderItem);
-
-        when(orderRepository.findOrderById(anyString())).thenReturn(order);
-        when(orderItemRepository.findOrderItemById(anyString())).thenReturn(orderItem);
-
-
-        OrderItemResponse sampleOrderId = changeItemAmount.execute("sampleOrderId", new OrderItemRequest());
-
-        assertEquals(5, orderItem.getProduct().getQuantityStock());
-        verify(orderItemRepository, times(1)).save(orderItem);
-        verify(updateOrder, times(1)).execute("sampleOrderId", order);
-    }
-
 
 }

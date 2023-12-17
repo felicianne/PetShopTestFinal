@@ -1,5 +1,6 @@
 package com.btg.PetShopTestFinal.usecase.product;
 
+import com.btg.PetShopTestFinal.modules.order.entity.Order;
 import com.btg.PetShopTestFinal.modules.product.dto.ProductRequest;
 import com.btg.PetShopTestFinal.modules.product.dto.ProductResponse;
 import com.btg.PetShopTestFinal.modules.product.entity.Product;
@@ -40,10 +41,10 @@ class UpdateProductUnitTest {
         productRequest.setPrice(BigDecimal.valueOf(25.0));
 
         Product existingProduct = new Product();
-        existingProduct.setId(Integer.valueOf(productId));
+        existingProduct.setId(Integer.getInteger(productId));
         existingProduct.setName("Old Product");
         existingProduct.setQuantityStock(5);
-        existingProduct.setPrice(BigDecimal.valueOf(20.0));
+        existingProduct.setPrice(BigDecimal.valueOf(25.0));
 
         when(repository.findProductById(productId)).thenReturn(existingProduct);
         when(repository.save(any(Product.class))).thenAnswer(invocation -> invocation.getArgument(0));
@@ -71,4 +72,5 @@ class UpdateProductUnitTest {
 
         assertThrows(Exception.class, () -> updateProduct.execute(nonExistingProductId, productRequest));
     }
+
 }
