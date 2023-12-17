@@ -3,6 +3,7 @@ package com.btg.PetShopTestFinal.modules.costumers.controller;
 
 import com.btg.PetShopTestFinal.infra.exception.ClientBadRequest;
 import com.btg.PetShopTestFinal.modules.costumers.dto.CustomerRequest;
+import com.btg.PetShopTestFinal.modules.costumers.dto.CustomerRequestUpdate;
 import com.btg.PetShopTestFinal.modules.costumers.dto.CustomerResponse;
 import com.btg.PetShopTestFinal.modules.costumers.usecase.*;
 import com.btg.PetShopTestFinal.utils.CustomerConvert;
@@ -93,7 +94,7 @@ public class CustomerController {
     })
     @PutMapping("/{id}")
     public ResponseEntity<CustomerResponse> updateCustomer(@PathVariable String id,
-                                                           @RequestBody CustomerRequest customerRequest) throws Exception {
+                                                           @RequestBody CustomerRequestUpdate customerRequest) throws Exception {
         return ResponseEntity.ok(updateCustomer.execute(id, customerRequest));
     }
 
