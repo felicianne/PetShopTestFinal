@@ -20,15 +20,15 @@ import java.math.BigDecimal;
 public class
 ChangeItemAmount {
     @Autowired
-    OrderItemRepository ordemItemRepository;
+    static OrderItemRepository orderItemRepository;
     @Autowired
-    ProductRepository productRepository;
+    static ProductRepository productRepository;
     @Autowired
-    OrderRepository orderRepository;
+    static OrderRepository orderRepository;
     @Autowired
     DeleteOrderItem deleteOrderItem;
 
-    public OrderItemResponse execute(String orderItemID, OrderItemRequest orderItemRequest) throws Exception {
+    public static OrderItemResponse execute(String orderItemID, OrderItemRequest orderItemRequest) throws Exception {
         OrderItem orderItem = validateOrderItem(orderItemID);
 
         if (!deleteOrderAmountEqualsZero(orderItemRequest)) {
@@ -43,23 +43,23 @@ ChangeItemAmount {
         return OrderItemConvert.toResponseOrderItem(orderItem);
     }
 
-    private OrderItem validateOrderItem(String orderItemID) throws ClientBadRequest {
-        OrderItem orderItem = ordemItemRepository.findOrderItemById(orderItemID);
+    private static OrderItem validateOrderItem(String orderItemID) throws ClientBadRequest {
+        OrderItem orderItem = orderItemRepository.findOrderItemById(orderItemID);
         if (orderItem == null) {
             throw new ClientBadRequest("Order not found");
         }
         return orderItem;
     }
 
-    private boolean deleteOrderAmountEqualsZero(OrderItemRequest orderItemRequest){
+    private static boolean deleteOrderAmountEqualsZero(OrderItemRequest orderItemRequest){
         return orderItemRequest.getAmount() != 0;
     }
 
-    private void deleteOrderItem(OrderItem orderItem) {
-        ordemItemRepository.delete(orderItem);
+    private static void deleteOrderItem(OrderItem orderItem) {
+        orderItemRepository.delete(orderItem);
     }
 
-    private Product validateProduct(String productSku) throws Exception {
+    private static Product validateProduct(String productSku) throws Exception {
         Product product = productRepository.findProductById(productSku);
         if (product == null) {
             throw new Exception("Product not found");
@@ -67,13 +67,13 @@ ChangeItemAmount {
         return product;
     }
 
-    private void updateOrderItem(OrderItem orderItem, OrderItemRequest orderItemRequest, Product product) {
+    private static void updateOrderItem(OrderItem orderItem, OrderItemRequest orderItemRequest, Product product) {
         orderItem.setAmount(orderItemRequest.getAmount());
         orderItem.setTotal(product.getPrice().multiply(BigDecimal.valueOf(orderItemRequest.getAmount())));
-        ordemItemRepository.save(orderItem);
+        orderItemRepository.save(orderItem);
     }
 
-    private void updateOrderTotal(Order order) {
+    private static void updateOrderTotal(Order order) {
         order.setTotal(CalculateTotal.execute(order));
         orderRepository.save(order);
     }

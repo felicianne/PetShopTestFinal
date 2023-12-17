@@ -1,5 +1,7 @@
 package com.btg.PetShopTestFinal.usecase.orderItem;
 
+import com.btg.PetShopTestFinal.infra.exception.ClientBadRequest;
+import com.btg.PetShopTestFinal.modules.order.entity.Order;
 import com.btg.PetShopTestFinal.modules.orderItem.entity.OrderItem;
 import com.btg.PetShopTestFinal.modules.orderItem.repository.OrderItemRepository;
 import com.btg.PetShopTestFinal.modules.orderItem.usecase.DeleteOrderItem;
@@ -10,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 class DeleteOrderItemUnitTest {
@@ -42,11 +45,36 @@ class DeleteOrderItemUnitTest {
     }
 
     @Test
+    public void testExecuteOrderSuccessfully() throws Exception {
+
+        String orderId = "123";
+        Order mockOrder = new Order();
+        OrderItem OrderItem = new OrderItem();
+        when(orderItemRepository.findOrderItemById(orderId)).thenReturn(OrderItem);
+
+        deleteOrderItem.execute(orderId);
+
+        verify(orderItemRepository, times(1)).delete(OrderItem);
+    }
+
+
+    @Test
     void testDeleteNonExistingOrderItem() {
         String orderId = "non-existing-id";
 
         when(orderItemRepository.findOrderItemById(orderId)).thenReturn(null);
 
         assertThrows(Exception.class, () -> deleteOrderItem.execute(orderId));
+    }
+
+    @Test
+    public void testExecuteOrderNotFound() {
+
+        String orderId = "456";
+        when(orderItemRepository.findOrderItemById(orderId)).thenReturn(null);
+
+        assertThrows(Exception.class, () -> deleteOrderItem.execute(orderId));
+
+        verify(orderItemRepository, never()).delete(any(OrderItem.class));
     }
 }

@@ -47,9 +47,8 @@ public class AddOrderItemUnitTest {
     @InjectMocks
     private AddOrderItem addOrderItem;
 
-    @BeforeEach
-    public void setup() {
-        MockitoAnnotations.openMocks(this);
+    public void setUp() {
+        MockitoAnnotations.initMocks(this);
     }
 
     @Test
@@ -69,6 +68,7 @@ public class AddOrderItemUnitTest {
 
     }
 
+
     @Test
     public void testExecute_InvalidOrder_ExceptionThrown() {
 
@@ -79,25 +79,18 @@ public class AddOrderItemUnitTest {
         assertThrows(ClientBadRequest.class, () -> addOrderItem.execute("invalidOrderId", orderItemRequest));
     }
 
-
-/*
     @Test
-    public void testSaveOrderItem_SavesNewItemAndAddsToOrder() {
-
-        Order order = new Order();
-        when(orderRepository.findOrderById(anyString())).thenReturn(order);
-
+    public void testExecute_ThrowsExceptionWhenProductNotFound() {
         Product product = new Product();
-        when(productRepository.findProductById(anyString())).thenReturn(product);
+        when(orderRepository.findOrderById(any())).thenReturn(null);
+        when(productRepository.findProductById(any())).thenReturn(null);
 
+        OrderItemRequest orderItemRequest = new OrderItemRequest();
+        orderItemRequest.setProductId("productId");
 
-        OrderItemResponse response = addOrderItem.execute("sampleOrderId", new OrderItemRequest());
-
-
-        assertEquals(1, order.getOrderItens().size());
-        assertNotNull(response);
-
+        assertThrows(Exception.class, () -> addOrderItem.execute("orderId", orderItemRequest));
     }
 
- */
+
+
 }
